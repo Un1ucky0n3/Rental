@@ -14,6 +14,5 @@ public class ProjectorBuilder
     public ProjectorBuilder WithResolution(string resolution) { _resolution = resolution; return this; }
     public ProjectorBuilder WithBrightness(int brightness) { _brightness = brightness; return this; }
     public ProjectorBuilder WithContrastRatio(int contrast) { _contrastRatio = contrast; return this; }
-
     public Projector Build() => new Projector(_id, _name, _price, _resolution, _brightness, _contrastRatio);
 }
