@@ -2,11 +2,11 @@
 
 public class User
 {
-    private int id;
-    private string name;
-    private string surname;
-    private USR_TYPE type;
-    private int maxRental;
+    private int id { get; set; }
+    private string name { get; set; }
+    private string surname { get; set; }
+    private USR_TYPE type { get; set; }
+    private int maxRental { get; set; }
 
     public User(int id, string name, string surname, USR_TYPE type)
     {
@@ -30,50 +30,5 @@ public class User
                 this.maxRental = 0;
                 break;
         }
-    }
-
-    public int getId()
-    {
-        return this.id;
-    }
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public string getName()
-    {
-        return this.name;
-    }
-    public void setName(string name)
-    {
-        this.name = name;
-    }
-
-    public string getSurname()
-    {
-        return this.surname;
-    }
-    public void setSurname(string surname)
-    {
-        this.surname = surname;
-    }
-
-    public USR_TYPE getType()
-    {
-        return this.type;
-    }
-    public void setType(USR_TYPE type)
-    {
-        this.type = type;
-    }
-    
-    public int getMaxRental()
-    {
-        return this.maxRental;
-    }
-    public void setMaxRental(int maxRental)
-    {
-        this.maxRental = maxRental;
     }
 }
