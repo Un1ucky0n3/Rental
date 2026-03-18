@@ -1,4 +1,5 @@
 ﻿using Rental.Users;
+using System;
 
 namespace Rental.Logic;
 
@@ -46,5 +47,38 @@ public class Service
         }
         Console.WriteLine(new string('-', 50));
     }
-    
+
+    public void RentHardwareToUser(Hardware hardware, User user, int days = 7)
+    {
+        try
+        {
+            int amountOfRentalsByUser = 0;
+            foreach (Rental r in Rentals)
+            {
+                if (r.User.Id == user.Id)
+                {
+                    amountOfRentalsByUser++;
+                    if(r.Hardware.Id == hardware.Id) throw new Exception("------------------------------------------\n"
+                                                                          + "This user already rented out this hardware\n"
+                                                                          + "------------------------------------------");
+                }
+                
+            }
+
+            if (amountOfRentalsByUser >= user.MaxRental)
+            {
+                throw new Exception("------------------------------------------\n"
+                                  + "This user already rented too much hardware\n"
+                                  + "------------------------------------------");
+            }
+            Rentals.Add(
+                    new Rental(hardware, user, 
+                        DateTime.Today.ToString("d"), days, 
+                        DateTime.Today.AddDays(days).ToString("d")));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
 }

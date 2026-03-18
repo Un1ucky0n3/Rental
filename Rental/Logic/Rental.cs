@@ -4,14 +4,14 @@ namespace Rental.Logic;
 
 public class Rental
 {
-    private Hardware Hardware { get; set; }
-    private User User { get; set; }
-    private String RentDate { get; set; }
-    private int HowLong { get; set; } //days
-    private String ReturnDate { get; set; }
-    private String ActualReturnDate { get; set; }
-    private bool IsItOverDue { get; set; }
-    private double Penalty { get; set; }
+    public Hardware Hardware { get; set; }
+    public User User { get; set; }
+    public String RentDate { get; set; }
+    public int HowLong { get; set; } //days
+    public String ReturnDate { get; set; }
+    public String ActualReturnDate { get; set; }
+    public bool IsItOverDue { get; set; }
+    public double Penalty { get; set; }
     public Rental(Hardware hardware, User user, String rentDate, int howLong, String returnDate)
     {
         this.Hardware = hardware;
