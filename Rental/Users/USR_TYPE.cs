@@ -2,6 +2,6 @@
 
 public enum USR_TYPE
 {
-    USER,
+    STUDENT,
     EMPLOYEE
 }

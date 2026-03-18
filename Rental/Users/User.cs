@@ -2,11 +2,11 @@
 
 public class User
 {
-    private int id { get; set; }
-    private string name { get; set; }
-    private string surname { get; set; }
-    private USR_TYPE type { get; set; }
-    private int maxRental { get; set; }
+    public int id { get; set; }
+    public string name { get; set; }
+    public string surname { get; set; }
+    public USR_TYPE type { get; set; }
+    public int maxRental { get; set; }
 
     public User(int id, string name, string surname, USR_TYPE type)
     {
@@ -20,7 +20,7 @@ public class User
     {
         switch (type)
         {
-            case USR_TYPE.USER:
+            case USR_TYPE.STUDENT:
                 this.maxRental = 2;
                 break;
             case USR_TYPE.EMPLOYEE:

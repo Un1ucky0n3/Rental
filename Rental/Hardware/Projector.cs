@@ -1,22 +1,19 @@
 ﻿namespace Rental;
 
-public class Projector : Sprzet
+public class Projector : Hardware
 {
-    private string resolution { get; set; }
-    private int brightness { get; set; } // lumens
-    private int contrastRatio { get; set; }
-    private double weight { get; set; } // kg
-    private bool hasHdmi { get; set; }
+    public string? Resolution { get; private set; }
+    public int Brightness { get; private set; } // lumens
+    public int ContrastRatio { get; private set; }
 
     public Projector(int id, string name, double price,
-        string resolution, int brightness,
-        int contrastRatio, double weight, bool hasHdmi)
+        string? resolution = null,
+        int brightness = 0,
+        int contrastRatio = 0)
         : base(id, name, price)
     {
-        this.resolution = resolution;
-        this.brightness = brightness;
-        this.contrastRatio = contrastRatio;
-        this.weight = weight;
-        this.hasHdmi = hasHdmi;
+        Resolution = resolution;
+        Brightness = brightness;
+        ContrastRatio = contrastRatio;
     }
 }

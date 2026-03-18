@@ -1,22 +1,25 @@
-﻿namespace Rental;
+﻿using Rental;
 
-public class Laptop : Sprzet
+public class Laptop : Hardware
 {
-    private string processor { get; set; }
-    private string graphicsCard { get; set; }
-    private int ram { get; set; }        // GB
-    private int storage { get; set; }    // GB
-    private double screenSize { get; set; } // inches
+    public string? Processor { get; private set; }
+    public string? GraphicsCard { get; private set; }
+    public int RAM { get; private set; }
+    public int Storage { get; private set; }
+    public double ScreenSize { get; private set; }
 
     public Laptop(int id, string name, double price,
-        string processor, string graphicsCard,
-        int ram, int storage, double screenSize)
+        string? processor = null,
+        string? graphicsCard = null,
+        int ram = 0,
+        int storage = 0,
+        double screenSize = 0)
         : base(id, name, price)
     {
-        this.processor = processor;
-        this.graphicsCard = graphicsCard;
-        this.ram = ram;
-        this.storage = storage;
-        this.screenSize = screenSize;
+        Processor = processor;
+        GraphicsCard = graphicsCard;
+        RAM = ram;
+        Storage = storage;
+        ScreenSize = screenSize;
     }
 }

@@ -1,22 +1,19 @@
 ﻿namespace Rental;
 
-public class Camera : Sprzet
+public class Camera : Hardware
 {
-    private double resolution { get; set; } // megapixels
-    private string sensorType { get; set; }
-    private bool hasVideo { get; set; }
-    private double weight { get; set; } // grams
-    private string lensMount { get; set; }
+    public double Resolution { get; private set; }  // Megapixels
+    public string? SensorType { get; private set; }
+    public string? LensMount { get; private set; }
 
     public Camera(int id, string name, double price,
-        double resolution, string sensorType,
-        bool hasVideo, double weight, string lensMount)
+        double resolution = 0,
+        string? sensorType = null,
+        string? lensMount = null)
         : base(id, name, price)
     {
-        this.resolution = resolution;
-        this.sensorType = sensorType;
-        this.hasVideo = hasVideo;
-        this.weight = weight;
-        this.lensMount = lensMount;
+        Resolution = resolution;
+        SensorType = sensorType;
+        LensMount = lensMount;
     }
 }

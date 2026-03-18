@@ -2,7 +2,7 @@
 
 public enum STATUS
 {
-    AVAIABLE,
+    AVAILABLE,
     RENTED,
     BROKEN,
     UNAVAILABLE
