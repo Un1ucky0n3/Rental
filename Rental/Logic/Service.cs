@@ -9,6 +9,8 @@ public class Service
     private List<User> Users { get; set; } = new();
     private List<Rental> Rentals { get; set; } = new();
 
+    public double defaultPenalty { get; set; } = 0.5; //zł
+
     public void AddUser(String name, String surname, USR_TYPE type)
     {
         int id = 0;
