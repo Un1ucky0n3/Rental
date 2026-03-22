@@ -6,10 +6,9 @@ namespace Rental.Logic;
 
 public class Service
 {
-    private List<Hardware> Hardwares { get; set; } = new();
-    private List<User> Users { get; set; } = new();
+    public List<Hardware> Hardwares { get; set; } = new();
+    public List<User> Users { get; set; } = new();
     private List<Rental> Rentals { get; set; } = new();
-
     public double defaultPenalty { get; set; } = 0.5; //zł
 
     public void AddUser(String name, String surname, USR_TYPE type)
@@ -64,10 +63,9 @@ public class Service
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine(e.Message);
         }
     }
-
     public double ReturnHardwareAndCalculatePenalty(Hardware hardware, User user, double? penalty = null)
     {
         penalty ??= defaultPenalty;
@@ -77,7 +75,7 @@ public class Service
             var rental = Rentals.FirstOrDefault(r =>
                 r.User.Id == user.Id && r.Hardware.Id == hardware.Id);
 
-            DateTime endDate = DateTime.Parse(rental.ActualReturnDate);
+            DateTime endDate = DateTime.Parse(rental.ReturnDate);
             DateTime today = DateTime.Today;
 
             double totalPenalty = 0;
@@ -99,7 +97,6 @@ public class Service
             return 0;
         }
     }
-
     private enum SCENARIO
     {
         RENT,
@@ -133,7 +130,6 @@ public class Service
                 break;
         }
     }
-    
     public void MarkHardwareAsUnavailable(Hardware hardware, STATUS status)
     {
         hardware.Status = status;
@@ -144,21 +140,20 @@ public class Service
 
         foreach (var r in rentals)
         {
-            Console.WriteLine($"{r.Hardware.Name} | Due: {r.ActualReturnDate}");
+            Console.WriteLine($"{r.Hardware.Name} | Due: {r.ReturnDate}");
         }
     }
     public void PrintOverdueRentals()
     {
         DateTime today = DateTime.Today;
 
-        var overdue = Rentals.Where(r => DateTime.Parse(r.ActualReturnDate) < today);
+        var overdue = Rentals.Where(r => DateTime.Parse(r.ReturnDate) < today);
 
         foreach (var r in overdue)
         {
             Console.WriteLine($"{r.Hardware.Name} rented by {r.User.Name} is overdue!");
         }
     }
-    
     public void GenerateReport()
     {
         int total = Hardwares.Count;
@@ -170,4 +165,6 @@ public class Service
         Console.WriteLine($"Available: {available}");
         Console.WriteLine($"Rented: {rented}");
     }
+    
+    
 }
