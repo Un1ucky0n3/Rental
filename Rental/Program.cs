@@ -23,7 +23,7 @@ class Program
         service.AddHardware(laptop);
         service.AddHardware(projector);
         
-        service.PrintAllHardware(STATUS.AVAILABLE);
+        //service.PrintAllHardware(STATUS.AVAILABLE);
         
         // ===== Punkt 12 =====
         service.AddUser("Jan", "Kowalski", USR_TYPE.STUDENT);

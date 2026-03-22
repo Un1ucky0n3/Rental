@@ -26,75 +26,34 @@ public class Service
         hardware.Id = id;
         Hardwares.Add(hardware);
     }
-    public void PrintAllHardware()
-    {
-        Console.WriteLine($"{"ID",-5} {"Type",-10} {"Name",-20} {"Status",-15}");
-        Console.WriteLine(new string('-', 50));
-
-        foreach (Hardware h in Hardwares)
-        {
-            Console.WriteLine($"{h.Id,-5} {h.GetType().Name,-10} {h.Name,-20} {h.Status, -15}");
-        }
-        Console.WriteLine(new string('-', 50));
-    }
-    public void PrintAllHardware(STATUS status)
-    {
-        Console.WriteLine($"{"ID",-5} {"Type",-10} {"Name",-20} {"Status",-15}");
-        Console.WriteLine(new string('-', 50));
-
-        foreach (Hardware h in Hardwares)
-        {
-            if(h.Status == status)
-                Console.WriteLine($"{h.Id,-5} {h.GetType().Name,-10} {h.Name,-20} {h.Status, -15}");
-        }
-        Console.WriteLine(new string('-', 50));
-    }
     public void RentHardwareToUser(Hardware hardware, User user, int days = 7)
     {
-        try
-        {
-            DoExceptionChecksForUserHardwareInteractions(user, hardware, SCENARIO.RENT);
-            hardware.Status = STATUS.UNAVAILABLE;
-            Rentals.Add(
-                    new Rental(hardware, user, 
-                        DateTime.Today.ToString("d"), days, 
-                        DateTime.Today.AddDays(days).ToString("d")));
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
+        DoExceptionChecksForUserHardwareInteractions(user, hardware, SCENARIO.RENT);
+        hardware.Status = STATUS.UNAVAILABLE;
+        Rentals.Add(
+            new Rental(hardware, user, 
+                DateTime.Today.ToString("d"), days, 
+                DateTime.Today.AddDays(days).ToString("d")));
     }
     public double ReturnHardwareAndCalculatePenalty(Hardware hardware, User user, double? penalty = null)
     {
         penalty ??= defaultPenalty;
-        try
-        {
-            DoExceptionChecksForUserHardwareInteractions(user, hardware, SCENARIO.RETURN);
-            var rental = Rentals.FirstOrDefault(r =>
-                r.User.Id == user.Id && r.Hardware.Id == hardware.Id);
+        DoExceptionChecksForUserHardwareInteractions(user, hardware, SCENARIO.RETURN);
+        var rental = Rentals.FirstOrDefault(r => r.User.Id == user.Id && r.Hardware.Id == hardware.Id);
 
-            DateTime endDate = DateTime.Parse(rental.ReturnDate);
-            DateTime today = DateTime.Today;
+        DateTime endDate = DateTime.Parse(rental.ReturnDate);
+        DateTime today = DateTime.Today;
+        double totalPenalty = 0;
 
-            double totalPenalty = 0;
-
-            if (today > endDate)
-            {
-                int overdueDays = (today - endDate).Days;
-                totalPenalty = overdueDays * penalty.Value;
-            }
-
-            Rentals.Remove(rental);
-            hardware.Status = STATUS.AVAILABLE;
-
-            return totalPenalty;
+        if (today > endDate) { 
+            int overdueDays = (today - endDate).Days; 
+            totalPenalty = overdueDays * penalty.Value;
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            return 0;
-        }
+
+        Rentals.Remove(rental);
+        hardware.Status = STATUS.AVAILABLE;
+
+        return totalPenalty;
     }
     private enum SCENARIO
     {
@@ -153,16 +112,29 @@ public class Service
             Console.WriteLine($"{r.Hardware.Name} rented by {r.User.Name} is overdue!");
         }
     }
-    public void GenerateReport()
+    public string GenerateReport()
     {
+        var report = new System.Text.StringBuilder();
+
+        report.AppendLine($"{"ID",-5} {"Type",-10} {"Name",-20} {"Status",-15}");
+        report.AppendLine(new string('-', 50));
+
+        foreach (var h in Hardwares)
+        {
+            report.AppendLine($"{h.Id,-5} {h.GetType().Name,-10} {h.Name,-20} {h.Status,-15}");
+        }
+
+        report.AppendLine(new string('-', 50));
+
         int total = Hardwares.Count;
         int available = Hardwares.Count(h => h.Status == STATUS.AVAILABLE);
         int rented = Rentals.Count;
 
-        Console.WriteLine("=== REPORT ===");
-        Console.WriteLine($"Total hardware: {total}");
-        Console.WriteLine($"Available: {available}");
-        Console.WriteLine($"Rented: {rented}");
+        report.AppendLine($"Total hardware: {total}");
+        report.AppendLine($"Available: {available}");
+        report.AppendLine($"Rented: {rented}");
+
+        return report.ToString();
     }
     
     

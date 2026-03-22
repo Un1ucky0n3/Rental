@@ -6,12 +6,6 @@ public class RentalNotFoundException(Hardware hardware, User user) : Exception(B
 {
     private static string BuildMessage(Hardware hardware, User user)
     {
-        string str = "Rental not found for user: " + user.Name + " hardware:" + hardware.Name;
-        int messageLength = str.Length;
-
-        return
-            new string('-', messageLength) + "\n" +
-            str + "\n" +
-            new string('-', messageLength);
+        return "Rental not found for user: " + user.Name + " hardware:" + hardware.Name;
     }
 }
