@@ -49,7 +49,6 @@ public class Service
         }
         Console.WriteLine(new string('-', 50));
     }
-
     public void RentHardwareToUser(Hardware hardware, User user, int days = 7)
     {
         try
