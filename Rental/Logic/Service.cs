@@ -1,5 +1,6 @@
 ﻿using Rental.Users;
 using System;
+using System.Text;
 using Rental.Exceptions;
 
 namespace Rental.Logic;
@@ -29,7 +30,7 @@ public class Service
     public void RentHardwareToUser(Hardware hardware, User user, int days = 7)
     {
         DoExceptionChecksForUserHardwareInteractions(user, hardware, SCENARIO.RENT);
-        hardware.Status = STATUS.UNAVAILABLE;
+        hardware.Status = STATUS.RENTED;
         Rentals.Add(
             new Rental(hardware, user, 
                 DateTime.Today.ToString("d"), days, 
@@ -58,7 +59,7 @@ public class Service
     private enum SCENARIO
     {
         RENT,
-        RETURN
+        RETURN,
     }
     private void DoExceptionChecksForUserHardwareInteractions(User user, Hardware hardware, SCENARIO scenario)
     {
@@ -88,7 +89,7 @@ public class Service
                 break;
         }
     }
-    public void MarkHardwareAsUnavailable(Hardware hardware, STATUS status)
+    public void ChangeStatusForHardware(Hardware hardware, STATUS status)
     {
         hardware.Status = status;
     }
@@ -135,6 +136,48 @@ public class Service
         report.AppendLine($"Rented: {rented}");
 
         return report.ToString();
+    }
+    public string GenerateShowAllHardware(STATUS status)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"{"ID",-5} {"Type",-10} {"Name",-20} {"Status",-15}").Append("\n");
+        sb.Append(new string('-', 50)).Append("\n");
+        foreach (var h in Hardwares)
+        {
+            if (h.Status == status)
+            {
+                sb.Append($"{h.Id,-5} {h.GetType().Name,-10} {h.Name,-20} {h.Status,-15}").Append("\n");
+            }
+        }
+
+        sb.Append(new string('-', 50)).Append("\n");
+        return sb.ToString();
+    }
+    public string GenerateShowAllHardware()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"{"ID",-5} {"Type",-10} {"Name",-20} {"Status",-15}").Append("\n");
+        sb.Append(new string('-', 50)).Append("\n");
+        foreach (var h in Hardwares)
+        {
+            sb.Append($"{h.Id,-5} {h.GetType().Name,-10} {h.Name,-20} {h.Status,-15}").Append("\n");
+        }
+
+        sb.Append(new string('-', 50)).Append("\n");
+        return sb.ToString();
+    }
+    public string GenerateShowAllUsers()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"{"ID",-5} {"Name",-10} {"Surname",-10} {"ACC_TYPE",-10}").Append("\n");
+        sb.Append(new string('-', 35)).Append("\n");
+        foreach (var u in Users)
+        {
+            sb.Append($"{u.Id,-5} {u.Name,-10} {u.Surname,-10} {u.Type,-10}").Append("\n");
+        }
+
+        sb.Append(new string('-', 35)).Append("\n");
+        return sb.ToString();
     }
     
     

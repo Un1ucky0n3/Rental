@@ -14,8 +14,8 @@ public class LaptopBuilder
     public LaptopBuilder WithId(int id) { _id = id; return this; }
     public LaptopBuilder WithName(string name) { _name = name; return this; }
     public LaptopBuilder WithPrice(double price) { _price = price; return this; }
-    public LaptopBuilder WithProcessor(string processor) { _processor = processor; return this; }
-    public LaptopBuilder WithGraphicsCard(string gpu) { _graphicsCard = gpu; return this; }
+    public LaptopBuilder WithProcessor(string? processor) { _processor = processor; return this; }
+    public LaptopBuilder WithGraphicsCard(string? gpu) { _graphicsCard = gpu; return this; }
     public LaptopBuilder WithRAM(int ram) { _ram = ram; return this; }
     public LaptopBuilder WithStorage(int storage) { _storage = storage; return this; }
     public LaptopBuilder WithScreenSize(double size) { _screenSize = size; return this; }
